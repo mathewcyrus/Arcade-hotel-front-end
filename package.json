@@ -1,0 +1,27 @@
+{
+  "name": "arcade_hotel_api",
+  "version": "1.0.0",
+  "description": "Arade hotel api",
+  "main": "Index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon Index.js"
+  },
+  "author": "Mathew Cyrus",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/jsonwebtoken": "^8.5.9"
+  }
+}

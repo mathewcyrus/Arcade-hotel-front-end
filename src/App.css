@@ -1,0 +1,9 @@
+body {
+  font-family: "Poppins", sans-serif;
+  max-width: 1200px;
+  /* background-color: whitesmoke; */
+}
+:root {
+  --brand-color: green;
+  --card-color: whitesmoke;
+}

@@ -43,8 +43,8 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-  font-size: 24px;
-  margin-top: -5px;
+  font-size: 20px;
+  margin-top: -20px;
   font-weight: 700;
 `;
 const CartItem = styled.table`
@@ -75,7 +75,7 @@ const TableHeader = styled.th`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   flex: 1;
 `;
 const TableData = styled.td`
@@ -129,7 +129,8 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   background-color: orange;
-  font-size: 22px;
+  font-size: 16px;
+  padding: 6px;
   font-weight: 700;
 `;
 const Summaries = styled.div`
@@ -159,7 +160,7 @@ const OrderDelivery = styled.div`
   margin-left: 47px;
   width: 700px;
   height: 200px;
-  margin-bottom: 15px;
+  margin-bottom: 70px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
 `;
 const TitleBar = styled.div`
@@ -258,7 +259,7 @@ const Payment = styled.div`
   position: absolute;
   right: 70px;
   padding-bottom: 20px;
-  top: 420px;
+  top: 460px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
 `;
 const CheckOutName = styled.div`
@@ -266,7 +267,8 @@ const CheckOutName = styled.div`
   justify-content: center;
   align-items: center;
   background-color: orange;
-  font-size: 24px;
+  font-size: 18px;
+  padding: 8px;
   font-weight: 700;
   width: 100%;
 `;
@@ -361,7 +363,7 @@ const Cart = () => {
               <TableData>
                 <Image src={dish.photo} />
               </TableData>
-              <TableData className="name">{dish.title}</TableData>
+              <TableData className="name">{dish.mealname}</TableData>
               <TableData>{dish.price}</TableData>
               <TableData className="quantity">
                 <Increment>-</Increment>

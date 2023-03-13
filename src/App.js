@@ -17,6 +17,7 @@ import Account from "./pages/Account";
 import Order from "./components/Account/Order";
 import Booked from "./components/Account/Booked";
 import Tickets from "./components/Account/Tickets";
+import AddForms from "./pages/AddForms";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about-us" element={<About />} />
+        <Route path="/admin-add" element={<AddForms />} />
         <Route path="/account" element={<Account />}>
           <Route path="/account/meal-orders" element={<Order />} />
           <Route path="/account/my-bookings" element={<Booked />} />

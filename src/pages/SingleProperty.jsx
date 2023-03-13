@@ -3,12 +3,6 @@ import Navbar from "../components/Navbar";
 import Navbar2 from "../components/Navbar2";
 import KingBedIcon from "@mui/icons-material/KingBed";
 
-import Image1 from "../images/download.jpg";
-import Image2 from "../images/Image1.jpg";
-import Image3 from "../images/room3.jpg";
-import Image4 from "../images/suite.jpg";
-import Image5 from "../images/room2.jpg";
-import Image6 from "../images/superior.jpg";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -108,12 +102,12 @@ const Button = styled.button`
 `;
 
 const SingleProperty = () => {
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState({});
   const userid = useSelector((state) => state.user.currentUser._id);
   const location = useLocation();
   const id = location.pathname.split("/")[3];
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchSingleRoom = async () => {
       try {
@@ -143,44 +137,32 @@ const SingleProperty = () => {
 
       <Div>
         <ImageWrapper>
-          <Img src={Image1} />
-          <Img src={Image2} />
-          <Img src={Image3} />
-          <Img src={Image4} />
-          <Img src={Image5} />
-          <Img src={Image6} />
+          {room.extraimages &&
+            room.extraimages.map((img, i) => <Img src={img} key={i} />)}
         </ImageWrapper>
         <Container>
           <RoomDetails>
             <Ul>
               <KingBedIcon />
               <div>
-                <span>Room no: </span> 001A
+                <span>Room no: </span> {room.number}
               </div>
             </Ul>
             <Ul>
               <KingBedIcon />
               <div>
-                <span>Floor: </span> 3rd
+                <span>Floor: </span> {room.floor}
               </div>
             </Ul>
             <Ul>
               <KingBedIcon />
               <div>
-                <span>Room Type: </span>Presidential Ensuite
+                <span>Room Type: </span>
+                {room.category}
               </div>
             </Ul>
           </RoomDetails>
-          <MoreDetails>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut fuga
-            fugit et. Quo repellendus tempora obcaecati soluta porro unde est,
-            illum provident explicabo pariatur harum numquam, aut impedit
-            accusantium, enim vero quas officia eos molestias vitae sit!
-            Voluptates eveniet soluta perferendis, at sed modi officiis,
-            excepturi ipsam harum voluptate ea. Aliquid mollitia et, architecto,
-            nesciunt debitis fuga exercitationem quia molestias quisquam quos at
-            commodi veniam, quae tempore voluptate dignissimos? Doloremque.
-          </MoreDetails>
+          <MoreDetails>{room.description}</MoreDetails>
           <Checkout>
             <Amount> $1200 (3 nights)</Amount>
             <Button onClick={reserveRoom}>Reserve</Button>

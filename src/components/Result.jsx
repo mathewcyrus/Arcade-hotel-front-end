@@ -91,7 +91,7 @@ const P = styled.p`
 const Result = ({ room }) => {
   return (
     <Div>
-      <Img src={Presidential} alt="image" />
+      <Img src={room.avatar} alt="image" />
       <RoomDescriptions>
         <Description>
           <span>Room no:</span> {room.number}

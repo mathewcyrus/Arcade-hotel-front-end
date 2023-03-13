@@ -163,7 +163,7 @@ const OptionContainer = styled.div`
 `;
 const Span = styled.div`
   text-align: left;
-  font-size: ${(props) => (props.type ? "date" && "18px" : "16px")};
+  font-size: 14px;
   margin-top: ${(props) => props.type === "date" && "-10px"};
   padding: 5px;
   background-color: white;
@@ -260,6 +260,7 @@ const Booking = () => {
       dates[0]?.startDate || ""
     }&end_date=${dates[0]?.endDate || ""}`
   );
+  console.log(data);
 
   const { dispatch } = useContext(searchContext);
   const refetchRooms = () => {

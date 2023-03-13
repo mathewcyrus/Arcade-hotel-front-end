@@ -29,6 +29,10 @@ const SideBar = styled.div`
   z-index: 4;
   padding: 10px;
   transition: 1s ease-in-out;
+  P {
+    font-size: 12px;
+    text-align: center;
+  }
 
   & .icon {
     top: 20px;
@@ -46,19 +50,19 @@ const SideBar = styled.div`
 const Mtitle = styled.div`
   font-weight: 700;
   font-size: 18px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   text-align: center;
 `;
 const Mimage = styled.div`
-  height: 250px;
-  width: 100%;
+  height: 200px;
+  width: 80%;
   margin-top: 30px;
   overflow: hidden;
 `;
 const BtnsDiv = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 20px;
   gap: 80px;
 `;
 const IncDiv = styled.div`
@@ -68,8 +72,8 @@ const IncDiv = styled.div`
   font-weight: 700;
   border: 1px solid orange;
   padding: 3px;
-  width: 15px;
-  height: 20px;
+  width: 20px;
+  height: 30px;
   font-size: 24px;
   cursor: pointer;
 `;
@@ -86,7 +90,7 @@ const Cart = styled.div`
   gap: 10px;
   color: black;
   background-color: orange;
-  padding: 0px 5px;
+  padding: 10px;
   cursor: pointer;
 `;
 const Img = styled.img`
@@ -129,10 +133,11 @@ const Mealcard = () => {
       <Link to="/Arcade-hotel-meals">
         <CancelIcon className="icon" />
       </Link>
-      <Mtitle>{dish.title}</Mtitle>
+      <Mtitle>{dish.mealname}</Mtitle>
       <Mimage>
-        <Img src={""} />
+        <Img src={dish.photo} />
       </Mimage>
+      <p>{dish.description}</p>
       <BtnsDiv>
         <BtnCont>
           <IncDiv onClick={() => setItemQuantity("dec")}>-</IncDiv>

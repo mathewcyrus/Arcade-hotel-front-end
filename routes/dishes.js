@@ -10,7 +10,7 @@ import { verifyAdmin, verifyToken } from "../utilities/verifyToken.js";
 
 const router = express.Router();
 // CREATING A Dish
-router.post("/", verifyToken, verifyAdmin, createDish);
+router.post("/", createDish);
 // UPDATING A Dish
 router.put("/:id", verifyToken, verifyAdmin, UpdateDish);
 // DELETING A Dish

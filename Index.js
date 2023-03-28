@@ -12,6 +12,7 @@ import orderRoute from "./routes/orders.js";
 import testimonialRoute from "./routes/testimonials.js";
 import eventsRoute from "./routes/events.js";
 import ticketsRoute from "./routes/tickets.js";
+import reservationsRoute from "./routes/reservation.js";
 
 dotenv.config();
 const app = express();
@@ -59,6 +60,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/events", eventsRoute);
 app.use("/api/testimonials", testimonialRoute);
 app.use("/api/tickets", ticketsRoute);
+app.use("/api/reservations", reservationsRoute);
 
 app.listen(8800, () => {
   connect();

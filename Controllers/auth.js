@@ -42,10 +42,13 @@ export const userLogin = async (req, res) => {
       process.env.JSON_TOKEN
     );
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        sameSite: "none",
+      })
       .status(200)
       .json({ ...otherDetails });
   } catch (err) {
-    res.status(400, "something");
+    res.status(400, "something went wrong");
   }
 };

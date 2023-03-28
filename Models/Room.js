@@ -22,39 +22,19 @@ const RoomSchema = new mongoose.Schema({
     required: true,
   },
   bedrooms: {
-    type: Number,
+    type: String,
   },
-  photos: {
+  avatar: {
+    type: String,
+  },
+  extraimages: {
     type: [String],
   },
   extrafeatures: {
     type: [String],
   },
-  bookedDates: [
-    {
-      startDate: {
-        type: Date,
-      },
-      endDate: {
-        type: Date,
-      },
-    },
-  ],
-  bookingoptions: [
-    {
-      bedroom: {
-        type: String,
-      },
-      adults: {
-        type: Number,
-      },
-      children: {
-        type: Number,
-      },
-    },
-  ],
   price: {
-    type: Number,
+    type: String,
     required: true,
   },
   isAvailable: {

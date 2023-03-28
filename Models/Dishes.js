@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const DishSchema = new mongoose.Schema(
   {
-    title: {
+    mealname: {
       type: String,
       required: true,
     },
@@ -12,6 +12,10 @@ const DishSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
     category: {

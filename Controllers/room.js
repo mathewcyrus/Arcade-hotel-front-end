@@ -1,3 +1,4 @@
+import Reservation from "../Models/Reservation.js";
 import Room from "../Models/Room.js";
 
 export const createRoom = async (req, res) => {
@@ -52,74 +53,34 @@ export const getRoom = async (req, res) => {
 
 export const getAllRooms = async (req, res) => {
   const { start_date, end_date } = req.query;
-  if (start_date === end_date) {
-    const rooms = await Room.find();
-    res.status(200).json(rooms);
-  } else {
-    try {
-      const filter = { isAvailable: true };
-      if (start_date && end_date) {
-        filter.start_date = { $gte: start_date };
-        filter.end_date = { $lte: end_date };
-      }
-      const rooms = await Room.find(filter).exec();
-      res.status(200).json(rooms);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  }
-};
-
-export const reserveRoom = async (req, res) => {
-  const { id, dates, options, userid } = req.body;
-  const adults = options.adults;
-  const children = options.children;
-  const bedroom = options.bedrooms;
   try {
-    const room = await Room.findById(id);
-    if (!room) {
-      return res.status(404).json({ message: "Room not found" });
+    // If start_date and end_date are not provided, return all rooms
+    if (!start_date && !end_date) {
+      const rooms = await Room.find().lean();
+      return res.status(200).json(rooms);
+    } else {
+      // Find all reservations within the date range
+      const reservationsRoomsInDateRange = await Reservation.find({
+        ReservationsDates: {
+          $elemMatch: {
+            startDate: { $lte: end_date },
+            endDate: { $gt: start_date, $lte: end_date },
+          },
+        },
+      }).select("ReservedRoom.roomID");
+      // Get an array of room IDs that are reserved during the date range
+      const reservedRoomIDs = reservationsRoomsInDateRange.map(
+        (reservation) => reservation.ReservedRoom.roomID
+      );
+      // Find all rooms that are not reserved within the date range
+      const availableRooms = await Room.find({
+        _id: { $nin: reservedRoomIDs },
+      }).lean();
+
+      return res.status(200).json(availableRooms);
     }
-    for (const date of dates) {
-      const startDate = date.startDate;
-      const endDate = date.endDate;
-      const overlappingBookings = room.bookedDates.filter((booking) => {
-        return (
-          (startDate >= booking.startDate && startDate <= booking.endDate) ||
-          (endDate >= booking.startDate && endDate <= booking.endDate)
-        );
-      });
-      if (overlappingBookings.length > 0) {
-        return res.status(400).json({
-          message: "Room is not available for the given dates",
-        });
-      }
-    }
-    room.bookedDates = [...room.bookedDates, ...dates];
-    room.bookingoptions.push({
-      bedroom: bedroom,
-      adults: adults,
-      children: children,
-    });
-    room.customerID = userid;
-    room.isAvailable = false;
-    const reservedRoom = await room.save();
-    return res
-      .status(200)
-      .json({ message: "Room reserved successfully", reservedRoom });
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
-  }
-};
-
-export const getAllReservedRooms = async (req, res) => {
-  try {
-    const reservedRooms = await Room.find({ isAvailable: false });
-    res.status(200).json(reservedRooms);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+    return res.status(500).json({ message: "Server error" });
   }
 };

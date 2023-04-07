@@ -158,45 +158,6 @@ const Tickets = () => {
 
   return (
     <Main>
-      <Card>
-        <Header>
-          <div className="title">Manage Your Tickets</div>
-          <div className="text">
-            View, reschedule or cancel your bookings and easily book again.
-          </div>
-          <div className="text">Time Zone: East Africa Time (GMT+3)</div>
-        </Header>
-        <Navigation>
-          <NavItem
-            className={active === "upcoming" ? "active" : ""}
-            onClick={handleClick}>
-            Upcoming
-          </NavItem>
-          <NavItem
-            className={active === "history" ? "active" : ""}
-            onClick={handleClick}>
-            History
-          </NavItem>
-        </Navigation>
-        <Wrapper>
-          {active === "upcoming" && (
-            <div id="no_bookings">
-              You have no upcoming bookings right now
-              <Link to="/book-online" style={{ color: "inherit" }}>
-                <span>Check out our services</span>
-              </Link>
-            </div>
-          )}
-          {active === "history" && (
-            <div id="history">
-              We Look forward to seeing you
-              <Link to="/book-online" style={{ color: "inherit" }}>
-                <span>Check out our services</span>
-              </Link>
-            </div>
-          )}
-        </Wrapper>
-      </Card>
       {tickets.length === 0 ? (
         <h4>You have no tickets bought</h4>
       ) : (

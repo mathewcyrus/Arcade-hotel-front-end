@@ -7,9 +7,6 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import title from "../images/title.svg";
 
 import StripeCheckout from "react-stripe-checkout";
-import Brian from "../images/brian.jpg";
-import beverage from "../images/Lefteris.jpg";
-import pizza2 from "../images/pizza.jpg";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import MobileScreenShareIcon from "@mui/icons-material/MobileScreenShare";
@@ -17,44 +14,62 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteDish } from "../redux/cartRedux";
+import {
+  clearCart,
+  decrementQuantity,
+  deleteDish,
+  incrementQuantity,
+} from "../redux/cartRedux";
 import { dataRequest } from "../hooks/requestMethods";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Maindiv = styled.div`
   background-color: #d3d3d35a;
+  position: relative;
 `;
 const Logo = styled.img`
   height: 30px;
   top: 30px;
   padding: 5px;
   border-radius: 5px;
-  margin: 10px 0px -10px 30px;
   object-fit: cover;
   background-color: black;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    margin: 10px 0px 0px 0px;
+  }
 `;
 const CartWrapper = styled.div`
   display: flex;
   margin: 20px 0px 0px;
   gap: 60px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 const Header = styled.div`
-  display: flex;
-  justify-content: center;
-  align-content: center;
   font-size: 20px;
-  margin-top: -20px;
   font-weight: 700;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    margin-top: 10px;
+  }
 `;
 const CartItem = styled.table`
   display: flex;
   flex-direction: column;
   margin-left: 40px;
-  /* flex: 2; */
   width: 720px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
   padding-bottom: 10px;
+  h5 {
+    margin-left: 100px;
+  }
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    margin: 0px 10px;
+    width: 400px;
+  }
 `;
 const Tablerow = styled.tr`
   display: flex;
@@ -123,6 +138,10 @@ const OrderSummary = styled.div`
   width: 400px;
   height: 170px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    margin: 0px;
+    position: relative;
+  }
 `;
 const Title = styled.div`
   display: flex;
@@ -162,6 +181,10 @@ const OrderDelivery = styled.div`
   height: 200px;
   margin-bottom: 70px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    width: 400px;
+    margin: 0px 10px;
+  }
 `;
 const TitleBar = styled.div`
   color: white;
@@ -169,6 +192,9 @@ const TitleBar = styled.div`
   font-size: 18px;
   font-weight: 700;
   background-color: orange;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    text-align: center;
+  }
 `;
 const Deliverytext = styled.div`
   font-size: 16px;
@@ -184,6 +210,9 @@ const DeliveryOptions = styled.div`
   display: flex;
   height: 100px;
   margin: 20px 0px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 const YourAdress = styled.div`
@@ -196,6 +225,9 @@ const YourAdress = styled.div`
 `;
 const AreaSelection = styled.div`
   display: flex;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 const LocationContainer = styled.div`
   display: flex;
@@ -209,12 +241,22 @@ const Text = styled.div`
   font-size: 12px;
   font-style: italic;
   margin-left: 30px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 const Select = styled.select`
   height: 20px;
   border: none;
   outline: none;
   font-size: 12px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    height: 40px;
+    width: 300px;
+    margin-left: 40px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
 `;
 const Options = styled.option``;
 const Store = styled.div`
@@ -234,10 +276,16 @@ const CheckBox = styled.input`
 `;
 const HText = styled.div`
   font-size: 14px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 const PText = styled.div`
   font-size: 12px;
   font-style: italic;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 const SelectContain = styled.div`
   display: flex;
@@ -257,10 +305,19 @@ const HOptions = styled.option``;
 const Payment = styled.div`
   width: 400px;
   position: absolute;
+  overflow: hidden;
   right: 70px;
   padding-bottom: 20px;
   top: 460px;
   background-image: -webkit-linear-gradient(#d3d3d360, #d3d3d311);
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    position: relative;
+    top: 170px;
+    margin: 0px 10px;
+    right: 0px;
+    width: 400px;
+    padding-bottom: 30px;
+  }
 `;
 const CheckOutName = styled.div`
   display: flex;
@@ -271,6 +328,13 @@ const CheckOutName = styled.div`
   padding: 8px;
   font-weight: 700;
   width: 100%;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    padding: 0px;
+    height: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+  }
 `;
 const PaymentOption = styled.div`
   display: flex;
@@ -298,56 +362,82 @@ const Card = styled.div`
   }
 `;
 
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 10px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    padding: 0px 20px;
+    gap: 20px;
+  }
+`;
 const Cart = () => {
   const [stripeToken, setStripeToken] = useState(null);
   const cartitem = useSelector((state) => state.cart);
-  const userid = useSelector((state) => state.user.currentUser._id);
-  const id = cartitem.dishes.map((item) => item._id);
-  const price = cartitem.dishes.map((item) => item.price);
+  const userid = useSelector((state) => state.user.currentUser?._id);
   const navigate = useNavigate();
-  // console.log(productquantity);
   const dispatch = useDispatch();
 
+  //This function is called from stripe token component and gets the value of the stripe token
   const onToken = (token) => {
     setStripeToken(token);
   };
+
+  // Handles Creation of a new order once a there is a stripetoken
   useEffect(() => {
     if (stripeToken) {
       // convert token creation date
       const timestamp = stripeToken.created;
       const orderdate = new Date(timestamp * 1000);
       const formattedDate = orderdate.toLocaleDateString();
+
+      //Get products from the cart
       const product = cartitem.dishes.map((product) => ({
-        productimage: "image",
-        productname: product.title,
+        productimage: product.photo,
+        productname: product.mealname,
         productquantity: product.quantity,
       }));
-      console.log(formattedDate);
+
+      //Creating a new order after a stripe token is given back
       const createNewOrder = async () => {
-        const newOrder = await dataRequest.post("/orders", {
-          customerID: userid,
-          orderdate: formattedDate,
-          address: stripeToken.card.address_city,
-          paymentmethod: stripeToken.type,
-          total: cartitem.total,
-          product,
-        });
-        console.log(newOrder);
+        stripeToken &&
+          (await dataRequest.post("/orders", {
+            customerID: userid,
+            orderdate: formattedDate,
+            address: stripeToken.card.address_city,
+            paymentmethod: stripeToken.type,
+            total: cartitem.total,
+            product,
+          }));
       };
-      stripeToken && createNewOrder() && navigate("/orders");
+      stripeToken &&
+        createNewOrder() &&
+        dispatch(clearCart()) &&
+        navigate("/orders");
     }
   }, [stripeToken]);
+  const handleQuantity = (id, operation) => {
+    if (operation === "inc") {
+      dispatch(incrementQuantity({ id }));
+    } else {
+      dispatch(decrementQuantity({ id }));
+    }
+  };
 
+  //Dispatches an action to delete an item in the cart
   const deleteCartItem = (id, price) => {
-    console.log(id, price);
     dispatch(deleteDish({ id, price }));
   };
   return (
     <Maindiv>
       <Navbar type="cart" />
       <Navbar2 />
-      <Logo src={title} />
-      <Header>Your Cart ({cartitem.dishes.length} items)</Header>
+      <LogoWrapper>
+        <Logo src={title} />
+        <Header>Your Cart ({cartitem.dishes.length} items)</Header>
+      </LogoWrapper>
       <CartWrapper>
         <CartItem>
           <Tablerow className="tableheader">
@@ -358,24 +448,42 @@ const Cart = () => {
             <TableHeader>Total</TableHeader>
             <TableHeader>Delete</TableHeader>
           </Tablerow>
-          {cartitem.dishes.map((dish) => (
-            <Tablerow key={dish._id}>
-              <TableData>
-                <Image src={dish.photo} />
-              </TableData>
-              <TableData className="name">{dish.mealname}</TableData>
-              <TableData>{dish.price}</TableData>
-              <TableData className="quantity">
-                <Increment>-</Increment>
-                {dish.quantity}
-                <Increment>+</Increment>
-              </TableData>
-              <TableData>{dish.price * dish.quantity}</TableData>
-              <TableData className="icon">
-                <CancelIcon onClick={deleteCartItem} />
-              </TableData>
-            </Tablerow>
-          ))}
+          {cartitem.dishes.length === 0 ? (
+            <h5>
+              You have not added meals yet{" "}
+              <Link to="/arcade-hotel-meals" style={{ color: "blue" }}>
+                {" "}
+                order meals
+              </Link>
+            </h5>
+          ) : (
+            cartitem.dishes.map((dish) => (
+              <Tablerow key={dish._id}>
+                <TableData>
+                  <Image src={dish.photo} />
+                </TableData>
+                <TableData className="name">{dish.mealname}</TableData>
+                <TableData>{dish.price}</TableData>
+                <TableData className="quantity">
+                  <Increment onClick={() => handleQuantity(dish._id, "dec")}>
+                    -
+                  </Increment>
+                  {dish.quantity}
+                  <Increment onClick={() => handleQuantity(dish._id, "inc")}>
+                    +
+                  </Increment>
+                </TableData>
+                <TableData>{dish.price * dish.quantity}</TableData>
+                <TableData className="icon">
+                  <CancelIcon
+                    onClick={() =>
+                      deleteCartItem(dish.id, dish.price * dish.quantity)
+                    }
+                  />
+                </TableData>
+              </Tablerow>
+            ))
+          )}
         </CartItem>
         <OrderSummary>
           <Title> Order Summary</Title>
@@ -401,9 +509,9 @@ const Cart = () => {
       </CartWrapper>
       <OrderDelivery>
         <TitleBar>Delivery Options</TitleBar>
-        <Deliverytext>How would you like us to deliver?</Deliverytext>
+        <Deliverytext>How would you want us to deliver?</Deliverytext>
         <OrderCaution>
-          collection at our hotel should be within 1 hour after an order made.{" "}
+          collection at our hotel should be within 1 hour after an order made.
           <Link>FAQ</Link>
         </OrderCaution>
         <DeliveryOptions>
@@ -438,7 +546,7 @@ const Cart = () => {
                 </LocationContainer>
                 <Text>we deliver to your adress</Text>
               </Area>
-              <Select placeholder="area">
+              <Select>
                 <Options>Kakuzi</Options>
                 <Options>Sun ton</Options>
                 <Options>Two Rivers</Options>
@@ -470,7 +578,7 @@ const Cart = () => {
             <MobileScreenShareIcon />
             M-pesa
           </Card>
-          <StripeCheckout
+          {/* <StripeCheckout
             name="Arcade Hotel " // the pop-in header title
             description="Arcade Hotel Checkout" // the pop-in header subtitle
             image=""
@@ -485,7 +593,7 @@ const Cart = () => {
               <CreditCardIcon />
               Debit/Credit
             </Card>
-          </StripeCheckout>
+          </StripeCheckout> */}
         </PaymentOption>
       </Payment>
       <Footer />

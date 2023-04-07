@@ -41,6 +41,10 @@ const Loginwrapper = styled.div`
   flex-direction: column;
   margin: 20px 0px;
   gap: 15px;
+
+  p {
+    color: red;
+  }
 `;
 const Text = styled.div`
   width: max-content;
@@ -112,13 +116,19 @@ const SignUpbtn = styled(LoginButton)`
 const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userLoginFunc = (e) => {
+  const userLoginFunc = async (e) => {
     e.preventDefault();
-    login(dispatch, { email, password });
-    navigate(-1);
+    try {
+      const user = await login(dispatch, { email, password });
+      console.log(user);
+      user && navigate(-1);
+    } catch (error) {
+      // setError(error.message);
+    }
   };
   return (
     <Div>
@@ -144,11 +154,12 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Loginwrapper>
+          {error && <span>{error}</span>}
           <ForgotPassword>Forgot your Password?</ForgotPassword>
           <LoginButton type="submit" onClick={userLoginFunc}>
             Log in
           </LoginButton>
-          <OtherOptionsText>Or log in using</OtherOptionsText>
+          <OtherOptionsText>or log in using</OtherOptionsText>
           <Icons>
             <IconContainer>
               <TwitterIcon />

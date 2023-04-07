@@ -121,7 +121,7 @@ const Option = styled.div`
     cursor: pointer;
   }
 `;
-const Recommedations = styled.div`
+const Recommedations = styled.form`
   position: sticky;
   top: 180px;
   width: 330px;
@@ -236,14 +236,13 @@ const Booking = () => {
       key: "selection",
     },
   ]);
+  // OPTION SELECTION FOR BEDROOMS, NO OF ADULTS AND CHILDRENS
   const [options, setOptions] = useState({});
-  console.log(options);
-  // const dispatch = useDispatch();
   const handleOptionChange = (e) => {
     setOptions((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  //FETCHING DATA FROM DB
+  //FETCHING DATA FROM DB FOR EVENTS
   const [events, setEvents] = useState([]);
   useEffect(() => {
     const getEvents = async () => {
@@ -255,20 +254,21 @@ const Booking = () => {
     getEvents();
   }, []);
 
+  // FETCHING ROOMS FROM THE DB
   const { data, loading, reFetchData } = useFetch(
     `http://localhost:8800/api/rooms?start_date=${
       dates[0]?.startDate || ""
     }&end_date=${dates[0]?.endDate || ""}`
   );
-  console.log(data);
 
   const { dispatch } = useContext(searchContext);
-  const refetchRooms = () => {
+  //REFECHING ROOMS USING THE QUERY PARAMETERS OF START DATE AND END DATE
+  const refetchRooms = (e) => {
+    e.preventDefault();
     dispatch({ type: "NEW_SEARCH", payload: { dates, options } });
     options && dates && reFetchData();
   };
-
-  // console.log(data);
+  // FILTERING DIFFERENT ROOM CATEGORIES
   const regularRooms = data.filter((room) => room.category === "regular");
   const executiveRooms = data.filter((room) => room.category === "executive");
   const ballRooms = data.filter((room) => room.category === "Ballrooms");
@@ -465,10 +465,11 @@ const Booking = () => {
                         <Text>Bedrooms </Text>
                         <Select
                           required
+                          defaultValue="1"
                           onChange={handleOptionChange}
                           id="bedrooms">
-                          <BedOptions>1 bedroom</BedOptions>
-                          <BedOptions>2 bedroom</BedOptions>
+                          <BedOptions value="1 bedroom">1 bedroom</BedOptions>
+                          <BedOptions value="2 bedroom">2 bedroom</BedOptions>
                         </Select>
                       </OptionContainer>
                     )}
@@ -504,6 +505,7 @@ const Booking = () => {
                         onChange={handleOptionChange}
                         id="children"
                         min={0}
+                        defaultValue="0"
                         type="number"
                         required
                       />

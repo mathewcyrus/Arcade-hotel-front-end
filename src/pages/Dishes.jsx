@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import Dish from "../components/Dish";
@@ -9,8 +9,6 @@ import Navbar2 from "../components/Navbar2";
 import useFetch from "../hooks/fetchMethod";
 
 const Div = styled.div`
-  /* background-color: #0f0c0a; */
-  /* color: white; */
   margin-bottom: 20px;
   position: relative;
 `;
@@ -19,26 +17,6 @@ const Wrapper = styled.div`
   margin: 0px 80px;
 `;
 
-const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: black;
-`;
-
-const Info = styled.h1`
-  margin-top: -5px;
-  text-align: center;
-  font-size: 40px;
-  /* color: white; */
-`;
-const OrderText = styled.h3`
-  /* color: white; */
-  text-align: center;
-  margin-top: -15px;
-`;
-const Span = styled.span`
-  color: orange;
-`;
 const CategoryContainer = styled.div``;
 const FoodWrapper = styled.div`
   display: grid;
@@ -49,16 +27,14 @@ const FoodWrapper = styled.div`
   position: relative;
 `;
 const Heading = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   border-bottom: 1px solid lightgray;
-  text-align: center;
   padding-bottom: 5px;
 `;
 const Form = styled.form`
-  height: 50px;
+  margin-top: 20px;
   display: flex;
-  /* align-items: flex-end; */
   align-items: center;
   justify-content: end;
   input {
@@ -96,14 +72,15 @@ const Container = styled.div`
   display: grid;
   padding: 10px;
   gap: 20px;
-  /* margin-left: 30px; */
   margin-bottom: 30px;
   grid-template-columns: repeat(10, 1fr);
   div {
     width: max-content;
     cursor: pointer;
     padding: 5px;
-    /* border-bottom: 1px solid orange; */
+    &:hover {
+      border-bottom: 2px solid orange;
+    }
     &.active {
       font-weight: 700;
       border-bottom: 2px solid orange;
@@ -118,7 +95,7 @@ const Dishes = () => {
   //fETCHING DISHES FROM DB
   const { data, error, loading } = useFetch("http://localhost:8800/api/dishes");
 
-  //getting search result using lineaer algorithim
+  //getting search result using linear search algorithim
   const searchForDishes = (e) => {
     e?.preventDefault();
     const searchresult = data.filter((dish) => {
@@ -138,22 +115,7 @@ const Dishes = () => {
       <Div>
         <Navbar type="dishes" />
         <Navbar2 />
-        {/* <CarouselItem /> */}
         <Wrapper>
-          {/* <InfoContainer>
-            <Info>
-              Enjoy exclusive<Span> Meals </Span>prepared by the best
-              <Span> Award winning </Span>chefs and
-              <Span> Worldwide collection of food varieties.</Span>
-            </Info>
-            <OrderText>
-              From the convenience of your home by
-              <Span> Ordering Online </Span> or visit us at our
-              <Link>
-                <Span> Restaurants.</Span>
-              </Link>
-            </OrderText>
-          </InfoContainer> */}
           <Form onSubmit={searchForDishes}>
             <input
               placeholder="search for meals"
@@ -217,7 +179,7 @@ const Dishes = () => {
           <CategoryContainer>
             {searchresult.length < 1 && searchword !== "" ? (
               <p>
-                no result were found for "<b>{searchword}</b>
+                no results were found for "<b>{searchword}</b>
               </p>
             ) : searchresult.length >= 1 && searchword !== "" ? (
               <SearchCont>

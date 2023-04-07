@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import reagan from "../images/reagan.jpg";
 import PoolImage from "../images/Poolimage.jpg";
+import CancelIcon from "@mui/icons-material/Cancel";
 import Form from "./Form";
 const Wrapper = styled.div``;
 const Div = styled.div`
@@ -139,12 +140,28 @@ const FDescription = styled.div`
   margin-top: 10px;
   padding: 0px 10px;
 `;
-
+const Icon = styled.div`
+  top: 60px;
+  color: orange;
+  right: 200px;
+  position: absolute;
+  position: fixed;
+  cursor: pointer;
+  z-index: 5;
+  &:hover {
+    color: #ffa600c3;
+  }
+`;
 const Ground = () => {
   const [openForm, setopenForm] = useState(false);
   return (
     <Wrapper>
       {openForm && <Form type="ground" />}
+      {openForm && (
+        <Icon>
+          <CancelIcon onClick={() => setopenForm(!openForm)} />
+        </Icon>
+      )}
 
       <Div>
         <GroundCont>

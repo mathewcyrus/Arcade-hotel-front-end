@@ -144,7 +144,7 @@ const Office = () => {
       )}
       <Offices>
         <WorkOffice className="boxshadow">
-          <Image src={Office2} />
+          <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678718888/Arcade%20Hotel/damir-kopezhanov-luseu9GtYzM-unsplash_mvwzhv.jpg" />
           <Title>Offices</Title>
           <Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
@@ -159,7 +159,7 @@ const Office = () => {
           </BtnCont>
         </WorkOffice>
         <WorkOffice>
-          <Image src={Office2} />
+          <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719026/Arcade%20Hotel/nastuh-abootalebi-ZtC4_rPCRXA-unsplash_ebt4tr.jpg" />
           <Title>Studio</Title>
           <Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
@@ -183,7 +183,7 @@ const Office = () => {
           praesentium repudiandae maxime! Libero.
         </OpenOfficesdesc>
         <OpenImage>
-          <OImage src={Office1} />
+          <OImage src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719039/Arcade%20Hotel/copernico-p_kICQCOM4s-unsplash_yb927v.jpg" />
           <OpenDiv>
             <OText>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea

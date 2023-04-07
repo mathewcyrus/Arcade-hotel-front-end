@@ -10,12 +10,14 @@ import HomeIcon from "@mui/icons-material/Home";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import InfoIcon from "@mui/icons-material/Info";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Login";
+import { logOut } from "../redux/userRedux";
 import CommentIcon from "@mui/icons-material/Comment";
-
+import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DensitySmallIcon from "@mui/icons-material/DensitySmall";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 const MainContainer = styled.div`
   position: relative;
@@ -23,6 +25,10 @@ const MainContainer = styled.div`
   width: 100vw;
   z-index: 3;
   height: 60px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    background-color: black;
+    border-bottom: 2px solid orange;
+  }
 `;
 const Container = styled.div`
   background-color: ${(props) => (props.type ? "cart" && "red" : "")};
@@ -34,8 +40,15 @@ const Container = styled.div`
   overflow: hidden;
   color: white;
   display: flex;
-  place-items: center;
+  align-items: center;
   position: fixed;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    justify-content: space-between;
+    padding-top: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 const Div = styled.div`
   display: none;
@@ -61,6 +74,13 @@ const Logo = styled.img`
   margin-left: -145px;
   height: 50px;
   width: 200px;
+  object-fit: contain;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    width: 150px;
+    margin-left: 0px;
+    margin-right: 90px;
+    overflow: hidden;
+  }
 `;
 const NavLi = styled.ul`
   display: flex;
@@ -69,6 +89,9 @@ const NavLi = styled.ul`
   font-weight: bold;
   margin-right: 30px;
   gap: 10px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const ListItem = styled(NavLink)`
@@ -80,6 +103,9 @@ const ListItem = styled(NavLink)`
   gap: 5px;
   /* border-radius: 15px; */
   padding: 4px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    display: none;
+  }
 
   &:hover {
     color: orange;
@@ -97,8 +123,11 @@ const SignContainer = styled.div`
   z-index: 2;
   height: 100%;
   display: flex;
-  place-items: center;
+  align-items: center;
   gap: 10px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    gap: 25px;
+  }
 `;
 const LogOut = styled.div`
   display: flex;
@@ -117,11 +146,36 @@ const Login = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60%;
+  padding: 5px;
   cursor: pointer;
   width: 100px;
   gap: 5px;
   background-color: orange;
+  &.menu {
+    display: none;
+  }
+
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    width: 20px;
+    color: white;
+    background-color: transparent;
+    & .icon {
+      @media screen and (min-width: 300px) and (max-width: 800px) {
+        font-size: 35px;
+      }
+    }
+    &.menu {
+      @media screen and (min-width: 300px) and (max-width: 800px) {
+        display: block;
+      }
+    }
+    span {
+      display: none;
+    }
+  }
+  &:hover {
+    box-shadow: 2px 2px 10px orange;
+  }
 `;
 const Register = styled(Login)``;
 const Img = styled.img`
@@ -141,6 +195,15 @@ const Shopping = styled.div`
   border-radius: 50%;
   align-items: center;
   background-color: orange;
+
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    background-color: transparent;
+    color: white;
+    margin-right: -10px;
+    & .icon {
+      font-size: 35px;
+    }
+  }
 `;
 const Counter = styled.div`
   position: absolute;
@@ -154,6 +217,15 @@ const Counter = styled.div`
   height: 15px;
   width: 15px;
   border-radius: 50px;
+  @media screen and (min-width: 300px) and (max-width: 800px) {
+    font-size: 16px;
+    color: black;
+    background-color: orange;
+    height: 25px;
+    width: 25px;
+    top: -15px;
+    right: -10px;
+  }
 `;
 const Chat = styled.div`
   height: 25px;
@@ -170,7 +242,7 @@ const Chat = styled.div`
 const Navbar = ({ type }) => {
   const cartQuantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+  const dispatch = useDispatch();
   const mainref = useRef(null);
   const chatref = useRef(null);
   useEffect(() => {
@@ -193,6 +265,10 @@ const Navbar = ({ type }) => {
       display: "block",
     });
   }, []);
+
+  const logoutUser = () => {
+    dispatch(logOut());
+  };
 
   return (
     <MainContainer>
@@ -230,13 +306,13 @@ const Navbar = ({ type }) => {
               Orders
             </ListItem>
 
-            <ListItem
+            {/* <ListItem
               to="/gallery"
               style={{ textDecoration: "none" }}
               activeclassname="active">
               <CollectionsIcon />
               Gallery
-            </ListItem>
+            </ListItem> */}
             <ListItem
               to="/about-us"
               style={{ textDecoration: "none" }}
@@ -249,7 +325,7 @@ const Navbar = ({ type }) => {
             {type !== "cart" && (
               <Link to="/cart" style={{ textDecoration: "none" }}>
                 <Shopping>
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon className="icon" />
                   {cartQuantity >= 1 && <Counter>{cartQuantity}</Counter>}
                 </Shopping>
               </Link>
@@ -258,41 +334,46 @@ const Navbar = ({ type }) => {
               <CommentIcon style={{ color: "black" }} />
             </Chat>
             {user && (
-              <ListItem
-                to="/account"
-                target="_blank"
-                style={{ textDecoration: "none" }}
-                activeclassname="active">
-                <LogOut>
+              <>
+                <ListItem
+                  to="/account"
+                  target="_blank"
+                  style={{ textDecoration: "none" }}
+                  activeclassname="active">
                   <Img src={albert} />
                   <span>{user.firstname}</span>
-                  <Login>
-                    <LoginIcon />
+                </ListItem>
+                <LogOut>
+                  <Login onClick={logoutUser}>
+                    <LoginIcon className="icon" />
                     Log out
                   </Login>
                 </LogOut>
-              </ListItem>
+              </>
             )}
             {!user && (
               <>
                 {type !== "login" && (
                   <Link to="/login" style={{ textDecoration: "none" }}>
                     <Login>
-                      <LoginIcon />
-                      Login
+                      <LoginIcon className="icon" />
+                      <span>Login</span>
                     </Login>
                   </Link>
                 )}
                 {type !== "register" && (
                   <Link to="/register" style={{ textDecoration: "none" }}>
                     <Register>
-                      <PersonAddAltIcon />
-                      Register
+                      <PersonAddAltIcon className="icon" />
+                      <span>Register</span>
                     </Register>
                   </Link>
                 )}
               </>
             )}
+            <Login className="menu">
+              <MenuIcon className="icon" />
+            </Login>
           </SignContainer>
         </NavContainer>
       </Container>

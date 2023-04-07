@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import lefteris from "../images/Lefteris.jpg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,7 +16,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  /* margin: 2px; */
 `;
 const ImageCntainer = styled.div`
   width: 100%;
@@ -63,7 +60,7 @@ const Price = styled.span`
   text-align: center;
   font-weight: bold;
   font-size: 18px;
-  color: #f6d604;
+  color: black;
 `;
 const Dish = ({ meal }) => {
   return (

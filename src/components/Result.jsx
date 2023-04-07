@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import Presidential from "../images/room2.jpg";
 const Div = styled.div`
   width: 300px;
   display: flex;
   background-color: whitesmoke;
   flex-direction: column;
   height: max-content;
-  /* padding: 10px 10px 10px 10px; */
   box-shadow: 5px 5px 5px lightgray;
-  /* border-radius: 10px; */
   margin-bottom: 20px;
 `;
 const Img = styled.img`
   width: 100%;
-  height: 100%;
+  height: 200px;
   border-radius: 0px 0px 5px 5px;
   object-fit: cover;
 `;
@@ -23,22 +20,18 @@ const RoomDescriptions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* flex-direction: column; */
-  /* flex: 2 */
   gap: 10px;
   height: 40px;
-  /* background-color: orange; */
-  /* margin-left: 10px; */
   margin-top: 5px;
 `;
 const Description = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
 
   span {
     font-size: 14px;
     font-weight: 500;
-    font-style: italic;
+    margin-right: 5px;
   }
 `;
 
@@ -57,13 +50,10 @@ const Ul = styled.span`
 `;
 
 const AvailabilityContainer = styled.div`
-  /* flex: 1; */
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-  /* margin-right: -10px; */
 `;
 
 const Button = styled.button`
@@ -81,11 +71,6 @@ const Price = styled.span`
   color: orange;
   font-size: 18px;
   font-weight: 700;
-  /* margin-top: 80px; */
-  /* text-align: left; */
-`;
-const P = styled.p`
-  font-size: 12px;
 `;
 
 const Result = ({ room }) => {

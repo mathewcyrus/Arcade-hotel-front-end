@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 const initial_State = {
   dates: [],
@@ -20,6 +20,18 @@ const searchReducer = (state, action) => {
 
 export const SearchContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(searchReducer, initial_State);
+  // Load state from local storage on component mount
+  useEffect(() => {
+    const savedState = localStorage.getItem("searchState");
+    if (savedState) {
+      dispatch({ type: "NEW_SEARCH", payload: JSON.parse(savedState) });
+    }
+  }, []);
+
+  // Save state to local storage on state change
+  useEffect(() => {
+    localStorage.setItem("searchState", JSON.stringify(state));
+  }, [state]);
 
   return (
     <searchContext.Provider

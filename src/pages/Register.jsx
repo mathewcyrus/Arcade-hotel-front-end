@@ -98,8 +98,10 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await dataRequest.post("/auth/register", { credentials });
-      console.log(res.data);
-    } catch (err) {}
+      res.data && navigate(-1);
+    } catch (err) {
+      alert(err.message);
+    }
   };
   return (
     <Div>

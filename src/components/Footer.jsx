@@ -17,14 +17,18 @@ const Div = styled.div`
   position: relative;
   display: flex;
   margin: 0px 0px 0px 0px;
+  overflow: hidden;
   background-position: center;
   background-size: cover;
   height: 420px;
 `;
 const Image = styled.img`
   height: 100%;
-  width: 400px;
+  width: 450px;
+  margin-left: -100px;
+  margin-top: 35px;
   object-fit: cover;
+  transform: rotate(25deg);
 `;
 
 const Wrapper = styled.div`
@@ -144,7 +148,7 @@ const Footer = () => {
   };
   return (
     <Div>
-      <Image src={reagan} />
+      <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678725931/Arcade%20Hotel/reagan-m-d-eWGvLCZfQ-unsplash_2_n2wf6v.jpg" />
       <Wrapper>
         <Testimonials>
           <TestContainer>

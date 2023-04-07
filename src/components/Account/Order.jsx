@@ -11,6 +11,7 @@ const Tablerow = styled.tr`
   display: flex;
   justify-content: center;
   /* align-items: center; */
+  margin: -2px;
   padding-bottom: 5px;
   &.tableheader {
     padding: 3px;
@@ -21,7 +22,7 @@ const TableHeader = styled.th`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   flex: 1;
 
@@ -34,26 +35,42 @@ const TableData = styled.td`
   margin-top: 5px;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-  /* flex-direction: column; */
   flex: 1;
-  font-size: 16px;
+  font-size: 12px;
 
   &.product {
     flex-direction: column;
-    width: 300px;
+    width: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     div {
       border-radius: 50%;
+      overflow: hidden;
+      height: 50px;
+      width: 50px;
     }
     span {
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      /* justify-content: center; */
+      &.Pname {
+        width: 250px;
+        font-weight: normal;
+      }
     }
   }
   &.item {
     gap: 10px;
     width: 300px;
   }
+`;
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -82,14 +99,16 @@ const Order = () => {
           <h4>You have no meal orders</h4>
         ) : (
           orders.map((order, i) => (
-            <Tablerow>
+            <Tablerow key={i}>
               <TableData>{i + 1}</TableData>
 
               <TableData className="product">
-                {order.product.map((item) => (
-                  <TableData className="item">
-                    <div>{item.productimage}</div>
-                    {item.productname}
+                {order.product.map((item, i) => (
+                  <TableData key={i} className="item">
+                    <div>
+                      <Image src={item.productimage} alt="image" />
+                    </div>
+                    <span className="Pname">{item.productname}</span>
                     <span>{item.productquantity}</span>
                   </TableData>
                 ))}

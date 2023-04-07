@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { addDish } from "../redux/cartRedux";
-
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CancelIcon from "@mui/icons-material/Cancel";
-import pizza from "../images/Pizza2.jpg";
-import useFetch from "../hooks/fetchMethod";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { dataRequest } from "../hooks/requestMethods";
@@ -102,6 +99,7 @@ const Img = styled.img`
 const Mealcard = () => {
   const [dish, setDish] = useState({});
   const [quantity, setQuantity] = useState(1);
+  console.log(typeof quantity);
   const dispatch = useDispatch();
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -126,7 +124,7 @@ const Mealcard = () => {
   };
   const addToCart = () => {
     dispatch(addDish({ ...dish, quantity }));
-    navigate("/Arcade-hotel-meals");
+    navigate(-1);
   };
   return (
     <SideBar>

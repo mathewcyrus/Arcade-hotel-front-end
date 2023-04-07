@@ -1,21 +1,13 @@
 import styled from "styled-components";
-import background from "../images/background.svg";
-import PoolImage from "../images/Poolimage.jpg";
-import Vase from "../images/Vase.jpg";
 import curve from "../images/curve.svg";
-import reagan from "../images/reagan.jpg";
 import lobby from "../images/lobby.jpg";
-import lefteris from "../images/Lefteris.jpg";
-import Presidential from "../images/room2.jpg";
-import rezha from "../images/rezha.jpg";
-
 import Navbar from "../components/Navbar";
-import Featured from "../components/Featured";
 import Footer from "../components/Footer";
-
 import CommentIcon from "@mui/icons-material/Comment";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import CarouselItem from "../components/CarouselItem";
+import { useState } from "react";
+import ChatWindow from "../components/Chat/ChatWindow";
 
 const Maindiv = styled.div`
   position: relative;
@@ -31,21 +23,18 @@ const Div = styled.div`
   border: none;
 `;
 const Div2 = styled(Div)`
-  background-image: url(${rezha});
+  background-image: url(${"https://res.cloudinary.com/dt75zlucp/image/upload/v1678724936/Arcade%20Hotel/rezha-ramadhan-sV8M_Lkg60Y-unsplash_z68qtc.jpg"});
   background-size: cover;
   background-repeat: no-repeat;
-  background-blend-mode: overlay;
   background-position: center;
   height: 100vh;
 `;
 const Curve = styled.div`
   background-image: url(${curve});
-  /* background-repeat: no-repeat; */
   position: absolute;
   width: 100%;
   height: 400px;
   bottom: -17px;
-  /* top: 242px; */
 `;
 const Descontainer = styled.div`
   margin: 0px 145px;
@@ -77,35 +66,12 @@ const Text3 = styled.span`
   -webkit-text-fill-color: transparent;
   font-size: 80px;
 `;
-const Img = styled.img`
-  height: 250px;
-  width: 250px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-const Sideimage = styled.div`
-  position: absolute;
-  top: 380px;
-  background: #cc672a;
-  height: 466px;
-  width: 228px;
-  border-radius: 200px 0px 0px 200px;
-  transform: translate(1121px);
-`;
-const Sideimagecopy = styled(Sideimage)`
-  background-image: url(${lobby});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: overlay;
-  top: 0px;
-  transform: translate(0px);
-`;
 
 const MessageIcon = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
+  cursor: pointer;
   align-items: center;
   right: 20px;
   bottom: 20px;
@@ -114,13 +80,17 @@ const MessageIcon = styled.div`
   height: 100px;
   width: 100px;
   background-color: orange;
+  outline: 1px solid black;
+
+  &:hover {
+    box-shadow: 1px 1px 20px blue;
+  }
 `;
 const BarSection = styled.div`
   display: flex;
   flex-direction: column;
   height: 750px;
   position: relative;
-  /* background-color: black; */
 `;
 const Bar = styled.div`
   display: flex;
@@ -130,7 +100,6 @@ const Bar = styled.div`
   font-weight: 700;
   height: 30px;
   color: orange;
-  /* background-color: black; */
   width: 100%;
 `;
 const Section = styled.div`
@@ -155,7 +124,6 @@ const TextContainer = styled.div`
   padding: 0px 15px;
   flex: 1;
   color: black;
-  /* background-color: whitesmoke; */
 `;
 const SectionTitle = styled.div`
   text-align: center;
@@ -217,10 +185,8 @@ const AlpineBar = styled.div`
   box-shadow: 5px 5px 10px lightgray;
   align-items: center;
   background-color: whitesmoke;
-  /* padding: 0px 20px; */
   height: 300px;
   width: 650px;
-  /* overflow: hidden; */
 `;
 const BarImage = styled.div`
   width: 100%;
@@ -253,8 +219,6 @@ const RoomSection = styled.div`
   justify-content: center;
   gap: 30px;
   margin-top: -30px;
-  /* margin-bottom */
-  /* background-color: black; */
   height: 500px;
 `;
 const RoomCard = styled.div`
@@ -269,9 +233,6 @@ const RoomCard = styled.div`
   :nth-child(2) {
     height: 480px;
     width: 330px;
-  }
-  & .roomImage {
-    /* height: 150px; */
   }
 `;
 const RoomType = styled.div`
@@ -325,9 +286,11 @@ const RoomBtn = styled.div`
   font-weight: 700;
 `;
 const Home = () => {
+  const [OpenMessagingWindow, setMessagingWindowOpen] = useState(false);
   return (
     <Maindiv>
       <Div>
+        {OpenMessagingWindow && <ChatWindow />}
         <Div2>
           <Navbar type="home" className="maincontainer" />
           <Descontainer>
@@ -335,24 +298,21 @@ const Home = () => {
               Experience <Text> Luxury</Text> <br />
               <Text2>&</Text2> <Text3>Great Taste</Text3>
             </Motto>
-            <Img src={PoolImage} className="animate" />
           </Descontainer>
           <Curve />
-          <MessageIcon>
+          <MessageIcon
+            onClick={() => setMessagingWindowOpen(!OpenMessagingWindow)}>
             <CommentIcon />
           </MessageIcon>
         </Div2>
       </Div>
       <CarouselItem />
 
-      {/* <Sideimage>
-        <Sideimagecopy></Sideimagecopy>
-      </Sideimage> */}
       <BarSection>
         <Bar>Lounges And Bars</Bar>
         <Section>
           <ImageContainer>
-            <Image src={Vase} />
+            <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678725352/Arcade%20Hotel/9d6b112f19293161979ba8ef431eac55_luqh0x.jpg" />
           </ImageContainer>
           <TextContainer>
             <SectionTitle> The Vase Bar</SectionTitle>
@@ -375,7 +335,7 @@ const Home = () => {
         <OtherBars>
           <AlpineBar>
             <BarImage>
-              <Image src={lefteris} />
+              <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678725482/Arcade%20Hotel/alexander-kovacs-spZexiKfZTs-unsplash_cahv4y.jpg" />
             </BarImage>
             <BarName>Alpine Lounge</BarName>
             <BarDescription>
@@ -389,7 +349,7 @@ const Home = () => {
           </AlpineBar>
           <AlpineBar>
             <BarImage>
-              <Image src={Vase} />
+              <Image src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678725290/Arcade%20Hotel/qui-nguyen-Zrp9b3PMIy8-unsplash_j28bcw.jpg" />
             </BarImage>
             <BarName>Orchard Bar</BarName>
             <BarDescription>
@@ -405,7 +365,10 @@ const Home = () => {
       </BarSection>
       <RoomSection>
         <RoomCard>
-          <Image src={Presidential} className="roomImage" />
+          <Image
+            src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719167/Arcade%20Hotel/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash_aubskh.jpg"
+            className="roomImage"
+          />
           <RoomType>Deluxe Rooms</RoomType>
           <RPrice>
             <span>$500</span>
@@ -427,7 +390,10 @@ const Home = () => {
           <RoomBtn>Reserve Online</RoomBtn>
         </RoomCard>
         <RoomCard>
-          <Image src={Presidential} className="roomImage" />
+          <Image
+            src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719134/Arcade%20Hotel/point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash_t6vt9c.jpg"
+            className="roomImage"
+          />
           <RoomType>Deluxe Rooms</RoomType>
           <RPrice>
             <span>$500</span>
@@ -449,7 +415,10 @@ const Home = () => {
           <RoomBtn>Reserve Online</RoomBtn>
         </RoomCard>
         <RoomCard>
-          <Image src={Presidential} className="roomImage" />
+          <Image
+            src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719121/Arcade%20Hotel/steven-ungermann-aRT5UCf2MYY-unsplash_cnnnm5.jpg"
+            className="roomImage"
+          />
           <RoomType>Deluxe Rooms</RoomType>
           <RPrice>
             <span>$500</span>

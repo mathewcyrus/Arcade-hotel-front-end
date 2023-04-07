@@ -13,7 +13,7 @@ const Div = styled.div`
   color: white;
 `;
 const Container = styled.div`
-  background-image: url(${Sharon});
+  background-image: url(${"https://res.cloudinary.com/dt75zlucp/image/upload/v1678719171/Arcade%20Hotel/sean-pollock-PhYq704ffdA-unsplash_k3tscr.jpg"});
   background-position: center;
   background-size: 100%;
   height: 100vh;
@@ -61,6 +61,7 @@ const Img2 = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
+  object-position: center top;
 `;
 const Section = styled.div`
   display: flex;
@@ -191,7 +192,7 @@ const About = () => {
               <Ul>Contacts</Ul>
             </Menu>
             <ImageContainer>
-              <Img src={pizza} />
+              <Img src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719134/Arcade%20Hotel/point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash_t6vt9c.jpg" />
             </ImageContainer>
           </LandingTemplate>
         </Container>
@@ -216,7 +217,7 @@ const About = () => {
             </SDescription>
           </SContainer>
           <SImage>
-            <Img2 src={tracy} />
+            <Img2 src="https://res.cloudinary.com/dt75zlucp/image/upload/v1678719918/Arcade%20Hotel/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash_lvtvla.jpg" />
             <Ncontainer>
               <Names>Mathew & Cyrus</Names>
             </Ncontainer>

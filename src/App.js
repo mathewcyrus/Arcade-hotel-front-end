@@ -4,9 +4,7 @@ import Home from "./pages/Home";
 import SingleProperty from "./pages/SingleProperty";
 import "./App.css";
 import Dishes from "./pages/Dishes";
-import SingleDish from "./pages/SingleDish";
 import Result from "./components/Result";
-import { rooms } from "./data";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -17,6 +15,7 @@ import Account from "./pages/Account";
 import Order from "./components/Account/Order";
 import Booked from "./components/Account/Booked";
 import Tickets from "./components/Account/Tickets";
+import MyAccount from "./components/Account/MyAccount";
 import AddForms from "./pages/AddForms";
 
 function App() {
@@ -45,6 +44,7 @@ function App() {
           <Route path="/account/meal-orders" element={<Order />} />
           <Route path="/account/my-bookings" element={<Booked />} />
           <Route path="/account/tickets" element={<Tickets />} />
+          <Route path="/account/my-account" element={<MyAccount />} />
         </Route>
       </Routes>
     </BrowserRouter>

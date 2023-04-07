@@ -7,7 +7,6 @@ export const login = async (dispatch, user) => {
       withcredentials: true,
       credentials: "include",
     });
-    console.log(res);
     dispatch(loginSuccess(res.data));
   } catch (error) {
     dispatch(loginFailure());

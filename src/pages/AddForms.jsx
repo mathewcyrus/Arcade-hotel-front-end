@@ -87,7 +87,6 @@ const AddForms = () => {
       category: "",
     }
   );
-  console.log(dish);
 
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -113,9 +112,9 @@ const AddForms = () => {
           avatarData
         )
         .then((res) => {
-          const avatarUrl = res.data.secure_url;
-          console.log(avatarUrl);
-          setAvatarUrl(avatarUrl);
+          const secure_Url = res.data.secure_url;
+          console.log(secure_Url);
+          setAvatarUrl(secure_Url);
         });
 
       // Upload extra images to cloudinary
@@ -134,11 +133,9 @@ const AddForms = () => {
           .then((res) => res.data.secure_url);
       });
       const imageUrls = await Promise.all(imagePromises);
-      console.log(imageUrls);
 
       // Create room in database
-
-      const res = await dataRequest.post("/rooms", {
+      await dataRequest.post("/rooms", {
         number: room.number,
         floor: room.floor,
         price: room.price,
@@ -148,7 +145,6 @@ const AddForms = () => {
         avatar: avatarUrl,
         extraimages: imageUrls,
       });
-      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -168,7 +164,6 @@ const AddForms = () => {
         )
         .then((res) => {
           const dishurl = res.data.secure_url;
-          console.log(dishurl);
           setDishUrl(dishurl);
         });
       // save dish to database

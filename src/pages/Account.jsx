@@ -135,18 +135,6 @@ const Account = () => {
           Tickets
         </MenuItem>
         <MenuItem
-          to="/account/orders"
-          activeclassname="active"
-          style={{ textDecoration: "none", color: "inherit" }}>
-          My Orders
-        </MenuItem>
-        <MenuItem
-          to="/account/my-address"
-          activeclassname="active"
-          style={{ textDecoration: "none", color: "inherit" }}>
-          My Address
-        </MenuItem>
-        <MenuItem
           to="/account/my-account"
           activeclassname="active"
           style={{ textDecoration: "none", color: "inherit" }}>

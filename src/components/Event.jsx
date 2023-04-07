@@ -257,7 +257,7 @@ const Event = ({ singleevent }) => {
   const [Open, SetOpen] = useState(false);
   const [tickettype, setTicketType] = useState("regular");
   const [ticketquantity, setTicketQuantity] = useState(1);
-  const userid = useSelector((state) => state.user.currentUser._id);
+  const userid = useSelector((state) => state.user.currentUser?._id);
   const navigate = useNavigate();
   const datestring = singleevent.date;
   const date = new Date(datestring);
@@ -270,7 +270,6 @@ const Event = ({ singleevent }) => {
   const onToken = (token) => {
     setStripeToken(token);
   };
-  console.log(formatteddate);
   useEffect(() => {
     if (stripeToken) {
       const buyTicket = async () => {

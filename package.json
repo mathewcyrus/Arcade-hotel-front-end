@@ -28,6 +28,7 @@
     "react-time-range": "^1.0.4",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },

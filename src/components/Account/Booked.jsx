@@ -21,7 +21,7 @@ const TableHeader = styled.th`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 14px;
   flex: 1;
 `;
 const TableData = styled.td`
@@ -32,13 +32,13 @@ const TableData = styled.td`
   justify-content: center;
   align-items: center;
   flex: 1;
-  font-size: 16px;
+  font-size: 14px;
 `;
 const Booked = () => {
   const [bookedRooms, setBookedRooms] = useState([]);
   useEffect(() => {
     const fetchBookedRooms = async () => {
-      const res = await dataRequest.get("/rooms/reserved/allrooms");
+      const res = await dataRequest.get("/reservations");
       setBookedRooms(res.data);
       console.log(res.data);
     };
@@ -50,38 +50,38 @@ const Booked = () => {
   ) : (
     <Div>
       <Tablerow className="tableheader">
-        <TableHeader>Room</TableHeader>
+        <TableHeader>Room number</TableHeader>
         <TableHeader>Room type</TableHeader>
-        <TableHeader>Bed rooms</TableHeader>
         <TableHeader>check-in</TableHeader>
         <TableHeader>check-out</TableHeader>
         <TableHeader>adults</TableHeader>
         <TableHeader>children</TableHeader>
+        <TableHeader>Bed rooms</TableHeader>
         <TableHeader>total days</TableHeader>
       </Tablerow>
 
-      {bookedRooms.map((bookedroom) => (
-        <Tablerow>
-          <TableData>{bookedroom.number}</TableData>
-          <TableData>{bookedroom.category}</TableData>
-          <TableData>{bookedroom.bedrooms}</TableData>
-          {bookedroom.bookedDates.map((date) => (
+      {bookedRooms.map((bookedroom, i) => (
+        <Tablerow key={i}>
+          <TableData>{bookedroom.ReservedRoom.roomNumber}</TableData>
+          <TableData>{bookedroom.ReservedRoom.roomcategory}</TableData>
+          {bookedroom.ReservationsDates.map((date, i) => (
             <>
-              <TableData>
+              <TableData key={i}>
                 {new Date(date.startDate).toLocaleDateString()}
               </TableData>
-              <TableData>
+              <TableData key={i}>
                 {new Date(date.endDate).toLocaleDateString()}
               </TableData>
             </>
           ))}
-          {bookedroom.bookingoptions.map((option) => (
+          {bookedroom.bookingoptions.map((option, i) => (
             <>
-              <TableData>{option.adults}</TableData>
-              <TableData>{option.children}</TableData>
+              <TableData key={i}>{option.adults}</TableData>
+              <TableData key={i}>{option.children}</TableData>
+              <TableData key={i}>{option.bedrooms}</TableData>
             </>
           ))}
-          <TableData>2</TableData>
+          <TableData>{bookedroom.totaldays}</TableData>
         </Tablerow>
       ))}
     </Div>

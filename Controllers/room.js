@@ -76,11 +76,9 @@ export const getAllRooms = async (req, res) => {
       const availableRooms = await Room.find({
         _id: { $nin: reservedRoomIDs },
       }).lean();
-
       return res.status(200).json(availableRooms);
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ message: "Server error" });
   }
 };

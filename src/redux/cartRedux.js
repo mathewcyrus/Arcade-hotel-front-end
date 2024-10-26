@@ -14,25 +14,25 @@ const cartSlice = createSlice({
       state.total += action.payload.price * action.payload.quantity;
     },
     deleteDish: (state, action) => {
-      state.quantity -= 1;
-      state.dishes.splice(
-        state.dishes.findIndex((item) => item._id === action.payload.id),
-        1
-      );
-      state.total = state.total - action.payload.price;
+      if (state.quantity >= 1) {
+        state.quantity -= 1;
+        state.dishes.splice(
+          state.dishes.findIndex((item) => item._id === action.payload.id),
+          1
+        );
+        state.total = state.total - action.payload.price;
+      }
     },
     incrementQuantity: (state, action) => {
       const dish = state.dishes.find((d) => d._id === action.payload.id);
       dish.quantity += 1;
       state.total += dish.price;
-      state.quantity += 1;
     },
     decrementQuantity: (state, action) => {
       const dish = state.dishes.find((d) => d._id === action.payload.id);
       if (dish.quantity > 1) {
         dish.quantity -= 1;
         state.total -= dish.price;
-        state.quantity -= 1;
       }
     },
     clearCart: (state) => {

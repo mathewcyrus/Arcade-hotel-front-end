@@ -17,7 +17,6 @@ const Container = styled.div`
   background-color: #0000009b;
   border: 1px solid orange;
 `;
-
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
@@ -69,28 +68,35 @@ const Header = styled.div`
 `;
 const ChatWindow = () => {
   const [message, setMessage] = useState("");
+  const [room, setRoom] = useState("");
   const userid = useSelector((state) => state.user.currentUser?._id);
   const [messages, setMessages] = useState([]);
-  const [greetings, setGreetings] = useState("");
+
+  const roomID = userid + "-" + "63ea4f99f90fe8ed65179078";
+
   const socket = io(
     `http://localhost:8800?client=${userid}&admin=63ea4f99f90fe8ed65179078`
   );
 
-  // useEffect(async () => {
-  //   // Fetch messages from the server when the component mounts
-  //   await dataRequest.get("http://localhost:8800/api/messages").then((response) => {
-  //     setMessages(response.data);
-  //   });
+  //fetch messages from the database
+  useEffect(() => {
+    const fetchChat = async () => {
+      const response = await dataRequest.get(
+        `/chats/singleChat/chat?roomId=${roomID}`
+      );
+      setMessages(response.data?.messages);
+    };
 
-  //   socket.on("connect", () => {
-  //     console.log(socket.id);
-  //   });
-
-  //   // Listen for new messages from the server and add them to the messages state
-  //   socket.on("message", (newMessage) => {
-  //     setMessages((prevMessages) => [...prevMessages, newMessage]);
-  //   });
-  // }, []);
+    fetchChat();
+  }, []);
+  // socket.on("connect", () => {
+  //   setRoom(socket.id);
+  // });
+  // Listen for new messages from the server and add them to the messages state
+  socket.on("message", (newMessage) => {
+    console.log(newMessage);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  });
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -99,13 +105,8 @@ const ChatWindow = () => {
     socket.emit("message", {
       sender: userid,
       message: message,
+      room: roomID,
     });
-
-    // Add the message to the messages state
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { content: message, type: "user" },
-    ]);
 
     // Reset the message input
     setMessage("");
@@ -115,14 +116,13 @@ const ChatWindow = () => {
       <Wrapper>
         <Header>Arcade Hotel</Header>
         <MessagesWindow>
-          {/* <Message greetings={greetings} type="greetings" /> */}
-
-          <Message />
-          <Message type="admin" />
-          <Message type="admin" />
-          <Message />
-          <Message type="admin" />
-          <Message />
+          {messages?.map((msg, i) => (
+            <Message
+              type={msg.sender === userid ? "" : "admin"}
+              key={msg._id || i}
+              msg={msg}
+            />
+          ))}
         </MessagesWindow>
         <InputWrapper onSubmit={sendMessage}>
           <Input

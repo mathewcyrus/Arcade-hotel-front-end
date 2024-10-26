@@ -9,7 +9,7 @@ const Container = styled.div`
   gap: 10px;
   padding-top: 5px;
   padding-left: 5px;
-  &.admin {
+  &.owner {
     flex-direction: row-reverse;
   }
 `;
@@ -31,7 +31,7 @@ const Messagebody = styled.div`
   flex-direction: column;
   width: 260px;
   border-radius: 0px 10px 10px 10px;
-  &.admin {
+  &.owner {
     border-radius: 10px 0px 10px 10px;
     background-color: teal;
   }
@@ -46,21 +46,12 @@ const Image = styled.img`
   height: max-content;
   object-fit: contain;
 `;
-const Message = ({ type, greetings }) => {
+const Message = ({ type, msg }) => {
   return (
-    <Container className={type === "admin" ? "admin" : ""}>
+    <Container className={type === "admin" ? "" : "owner"}>
       <Avatar>MC</Avatar>
-      <Messagebody className={type === "admin" ? "admin" : ""}>
-        {type === "greetings" ? (
-          <p>{greetings}</p>
-        ) : (
-          <p>
-            {type !== "admin"
-              ? "Hello arcade hotel. I have an enquiry about your bedrooms particularly this one. room 23B."
-              : "Hello Micheal. What would you like to know about our rooms?"}
-          </p>
-        )}
-        {type !== "admin" && <Image src={adam} />}
+      <Messagebody className={type === "admin" ? "" : "owner"}>
+        <p>{msg.message}</p>
       </Messagebody>
     </Container>
   );
